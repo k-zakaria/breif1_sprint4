@@ -44,8 +44,8 @@
     <main class="flex-shrink-0">
         <div class="container">
             <table class="table">
-                <thead>
-                    <tr>
+                <thead class="table table-bordered">
+                    <tr class="bg-primary text-center">
                         <th>Titre</th>
                         <th>Contenu</th>
                         <th>Date de création</th>
@@ -55,23 +55,21 @@
                 </thead>
                 <tbody>
                     <?php 
-                    $affichageQuery = $conn->prepare("SELECT * FROM article");
-                    $affichageQuery->execute();
-                    $result = $affichageQuery->fetchAll(PDO::FETCH_ASSOC);
-                    
-                    if ($result) {
+                    // $affichageQuery = $conn->prepare("SELECT * FROM article");
+                    // $affichageQuery->execute();
+                    // $result = $affichageQuery->fetchAll(PDO::FETCH_ASSOC);
+                    $articles = new Article('','');
+                    $result = $articles->affichage();
                         foreach($result as $article) { ?>     
-                            <tr>
+                            <tr class="text-center">
                                 <td><?= $article['titre'] ?></td>
                                 <td><?= $article['contenu'] ?></td>
                                 <td><?= $article["date_de_creation"] ?></td>
-                                <td><a href="crud.php?id=<?=$article['id']?>"  class="btn btn-primary">Edit</a>
-                                <a href="Edit.php?id=<?=$article['id']?>" class="btn btn-danger">Delet</a></td>
+                                <td><a href="updateForm.php?id=<?= $article['id'] ?>"  class="btn btn-primary">Edit</a>
+                                <a href="delete.php?id=<?=$article['id']?>" class="btn btn-danger">Delet</a></td>
                             </tr>
                         <?php }
-                    } else {
-                        echo "<tr><td colspan='3'>Aucun résultat trouvé</td></tr>";
-                    }
+                    
                     ?>
                 </tbody>
             </table>
@@ -93,7 +91,7 @@
                     <input type="text" name="titre" required class="form-control" />
                 </div>
                 <div class="modal-body">
-                    <textarea class="form-control" name="contenu" id="contenu"></textarea>
+                    <textarea class="form-control" name="contenu" id="contenu "></textarea>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -103,6 +101,7 @@
         </div>
     </div>
 </div>
+
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
